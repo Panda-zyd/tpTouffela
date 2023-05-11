@@ -95,4 +95,14 @@ class EtudiantController extends Controller
         $etudiant->delete();
         return view('etudiants.index');
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $etudiants = Etudiant::where('codeE', 'like', "%$keyword%")
+            ->orWhere('nom', 'like', "%$keyword%")
+            ->get();
+
+        return view('etudiants.search', ['etudiants' => $etudiants]);
+    }
 }
